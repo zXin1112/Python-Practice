@@ -1,0 +1,17 @@
+﻿{% extends 'learning_logs/base.html' %}
+{% load bootstrap3 %}
+
+{% block header%}
+<h2>修改：</h2>
+{% endblock%}
+
+{% block content %}
+<p>修改 <b><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></b> 中 <b>{{topic.date_added|date:' Y年 M d, H:i'}}</b>的详细内容</p>
+<form action="{% url 'learning_logs:edit_entry' topic.id %}" method="post" class="form">
+    {% csrf_token %} {#阻止攻击#}
+        {% bootstrap_form form %} {#表单文件，使用此模块必须加载 load bootstrap3  #}
+        {% buttons %}
+            <button name="submit" class="btn btn-primary">添加</button>
+       {% endbuttons %}
+</form>
+{% endblock content %}

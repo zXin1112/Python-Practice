@@ -1,0 +1,35 @@
+﻿{% extends "learning_logs/base.html" %}
+{% load bootstrap3 %}
+
+{% block header%}
+<h2><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></h2>
+{% endblock %}
+
+{% block content %}
+<p>为此主题添加的内容</p>
+    <form action="{% url 'learning_logs:new_entry' topic.id %}" method="post" class="form">
+        {% csrf_token %} {#阻止攻击#}
+        {% bootstrap_form form %} {#表单文件，使用此模块必须加载 load bootstrap3  #}
+        {% buttons %}
+            <button name="submit" class="btn btn-primary">添加</button>
+       {% endbuttons %}
+            
+    </form>
+{% endblock content %}
+
+
+{% comment %}
+{% extends 'learning_logs/base.html' %}
+
+{% block content %}
+<p><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></p>
+<p>添加 {{ topic }} 的详细内容</p>
+<form action="{% url 'learning_logs:new_entry' topic.id %}" method="post">
+    {% csrf_token %} {#阻止攻击#}
+    {{form.as_p}} {#创建所有此次提交所以要的表单元素#}
+    <button name="submit">添加</button>
+</form>
+{% endblock content %}
+{% endcomment %}
+
+
